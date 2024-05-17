@@ -1,24 +1,40 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Search = ({ createdWord, setCreatedWord }) => {
-  const [timer, setTimer] = useState(15);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+const WordCheck = ({
+  createdWord,
+  setCreatedWord,
+  setClickedIndices,
+  timer,
+  setTimer,
+}) => {
+  const [error, setError] = useState("");
+  const [wordList, setWordList] = useState([]);
+
   const handleWordCheck = async () => {
     try {
-      const { data } = await axios.get("/api/wordCheck", {
-        headers: {
-          word: createdWord,
-        },
-      });
-      console.log(data[0].word);
-      setTimer((prev) => prev + 15);
-      setIsButtonDisabled(false);
-      setCreatedWord("");
-      //   return data;
+      if (!wordList.includes(createdWord)) {
+        setWordList((prev) => [...prev, createdWord]);
+        const { data } = await axios.get("/api/wordCheck", {
+          headers: {
+            word: createdWord,
+          },
+        });
+        console.log(data[0].word);
+        setTimer((prev) => prev + 15);
+        setCreatedWord("");
+        setClickedIndices([]);
+        setError("");
+        console.log(wordList);
+
+        //   return data;
+      } else {
+        setError("you have used this word before");
+      }
     } catch (error) {
-      console.error("Error fetching check word:", error);
-      return "";
+      // console.error("Error fetching check word:", error);
+      // setError("Error checking word: " + error.message);
+      setError("invalid word");
     }
   };
 
@@ -27,7 +43,7 @@ const Search = ({ createdWord, setCreatedWord }) => {
       setTimer((prev) => {
         if (prev <= 1) {
           clearInterval(countdown);
-          setIsButtonDisabled(true);
+          // setIsButtonDisabled(true);
           return 0;
         }
         return prev - 1;
@@ -35,7 +51,7 @@ const Search = ({ createdWord, setCreatedWord }) => {
     }, 1000);
 
     return () => clearInterval(countdown);
-  }, []);
+  }, [setTimer]);
 
   useEffect(() => {
     console.log("search ", createdWord);
@@ -55,14 +71,15 @@ const Search = ({ createdWord, setCreatedWord }) => {
       <button
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         onClick={() => handleWordCheck()}
-        disabled={isButtonDisabled}
+        disabled={timer === 0}
       >
         Check Word
       </button>
 
-      <p className="text-xl">{timer} seconds remaining</p>
+      <p className="text-xl">{timer}</p>
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 };
 
-export default Search;
+export default WordCheck;

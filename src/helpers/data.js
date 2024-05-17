@@ -24,8 +24,7 @@ export const wordCheck = async (word) => {
         let url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
 
         const response = await axios.get(url)
-        console.log(response.data)
-
+        // console.log(response.data)
         if (response) {
             return response.data;
         } else {
@@ -33,6 +32,7 @@ export const wordCheck = async (word) => {
         }
 
     } catch (err) {
-        throw new Error(err)
+        // throw new Error(err)
+
     }
 }

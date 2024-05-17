@@ -1,4 +1,4 @@
-const wordList = [
+export const wordList = [
     "chicken", "mention", "charity", "upgrade", "program", "explode", "popular",
     "freedom", "holiday", "improve", "command", "history", "library", "purpose",
     "address", "support", "freeway", "inspire", "combine", "finance", "journey",
@@ -7,15 +7,12 @@ const wordList = [
     "service", "install", "receive", "college", "problem"
 ];
 
-
-export default wordList
-
-
-// const positions = [
-//     { x: 80, y: -120 },
-//     { x: 120, y: 0 },
-//     { x: 80, y: 120 },
-//     { x: -40, y: 120 },
-//     { x: -120, y: 20 },
-//     { x: -60, y: -60 },
-//   ];
+export const positions = [
+    { x: "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" },
+    { x: "top-0 right-1/4 mt-[30px]" },
+    { x: "top-1/3 right-10 mt-[22px]" },
+    { x: "bottom-[30px] right-1/4" },
+    { x: "bottom-[30px] left-1/4" },
+    { x: "top-1/3 left-10 mt-[22px]" },
+    { x: "top-0 left-1/4 mt-[30px]" },
+];
