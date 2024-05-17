@@ -7,10 +7,11 @@ const WordCheck = ({
   setClickedIndices,
   timer,
   setTimer,
+  error,
+  setError,
+  wordList,
+  setWordList,
 }) => {
-  const [error, setError] = useState("");
-  const [wordList, setWordList] = useState([]);
-
   const handleWordCheck = async () => {
     try {
       if (!wordList.includes(createdWord)) {
@@ -29,7 +30,7 @@ const WordCheck = ({
 
         //   return data;
       } else {
-        setError("you have used this word before");
+        setError("You have used this word before!");
       }
     } catch (error) {
       // console.error("Error fetching check word:", error);
@@ -53,31 +54,33 @@ const WordCheck = ({
     return () => clearInterval(countdown);
   }, [setTimer]);
 
-  useEffect(() => {
-    console.log("search ", createdWord);
-  }, [createdWord]);
+  // useEffect(() => {
+  //   console.log("search ", createdWord);
+  // }, [createdWord]);
 
   return (
-    <div className=" flex gap-4">
-      {/* <input
-        type="text"
-        placeholder="Try...."
-        onChange={(e) => setSearch(e.target.value)}
-        className="uppercase text-black px-2 h-10 rounded-lg"
-      /> */}
-      <p className="flex justify-center font-[700] text-2xl tracking-[.4em] uppercase border-b-4 divide-x-8 border-white w-[200px]">
-        {createdWord}
-      </p>
-      <button
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        onClick={() => handleWordCheck()}
-        disabled={timer === 0}
+    <div className="relative flex flex-col justify-center items-center gap-12">
+      <h1
+        className={`${
+          timer < 15 ? "text-red-700" : ""
+        } font-[700]   text-[40px]`}
       >
-        Check Word
-      </button>
+        {timer}
+      </h1>
+      <div className="flex justify-end gap-5">
+        <p className="flex justify-center font-[700] text-2xl tracking-[.4em] uppercase border-b-4 divide-x-8 border-white w-[200px]">
+          {createdWord}
+        </p>
+        <button
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          onClick={() => handleWordCheck()}
+          disabled={timer === 0}
+        >
+          Word Check
+        </button>
+      </div>
 
-      <p className="text-xl">{timer}</p>
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="absolute text-red-500">{error}</p>}
     </div>
   );
 };

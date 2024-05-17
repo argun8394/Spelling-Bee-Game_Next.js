@@ -17,12 +17,12 @@
   height: 40px;
   background-color: #27aae1;
   border-color: #27aae1;
-  /* position: relative; */
-  /* display: inline-block; */
-  display: flex;
+  position: relative;
+  /*display: inline-block; */
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .hexagon:before {

@@ -10,7 +10,9 @@ const Game = () => {
   const [newWord, setNewWord] = useState("");
   const [createdWord, setCreatedWord] = useState("");
   const [clickedIndices, setClickedIndices] = useState([]);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(30);
+  const [error, setError] = useState("");
+  const [wordList, setWordList] = useState([]);
 
   const getRandomWord = async () => {
     try {
@@ -23,7 +25,6 @@ const Game = () => {
   };
 
   const shuffleWord = async () => {
-    console.log(positions[0].x);
     // const randomWordIndex = Math.floor(Math.random() * wordList.length);
     // const word = wordList[randomWordIndex];
     const word = await getRandomWord();
@@ -52,9 +53,10 @@ const Game = () => {
     console.log(createdWord);
   };
 
-  const Clear = () => {
+  const Delete = () => {
     setClickedIndices([]);
     setCreatedWord("");
+    setError("");
   };
 
   useEffect(() => {
@@ -64,14 +66,8 @@ const Game = () => {
   return (
     <div className={style.container}>
       {10 > 0 ? (
-        <>
-          <div className="flex">
-            <button
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              onClick={() => Clear()}
-            >
-              Clear
-            </button>
+        <div className="flex flex-col gap-10">
+          <div className="flex justify-center items-end ">
             <WordCheck
               newWord={newWord}
               createdWord={createdWord}
@@ -79,38 +75,75 @@ const Game = () => {
               setClickedIndices={setClickedIndices}
               timer={timer}
               setTimer={setTimer}
+              error={error}
+              setError={setError}
+              wordList={wordList}
+              setWordList={setWordList}
             />
+            <button
+              className="h-8 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 
+              font-medium rounded-lg text-sm px-3 py-1.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 
+              focus:outline-none dark:focus:ring-red-800"
+              onClick={() => Delete()}
+            >
+              Delete
+            </button>
           </div>
-          <div className=" relative bg-white w-[340px] h-[250px] ">
-            {newWord.split("").map((letter, i) => (
-              <div
-                key={i}
-                className={`absolute ${style.hexagon} ${positions[i].x}  `}
-              >
+          <div className="flex">
+            <div className=" relative w-[340px] h-[250px] ">
+              {newWord.split("").map((letter, i) => (
                 <button
-                  className="flex justify-center items-center uppercase font-[700] text-2xl text-black bg-white w-7 h-7 rounded-sm"
+                  key={i}
+                  className={`absolute ${positions[i].x} w-[84px] h-[40px]
+                bg-transparent flex justify-center 
+                items-center before:absolute before:top-[-30px] before:w-0 before:h-0 
+                before:border-b-[30px] ${
+                  clickedIndices.includes(i)
+                    ? "before:border-b-[#ffbf00]"
+                    : "before:border-b-[#27aae1]"
+                } before:border-l-[42px] 
+                before:border-l-transparent before:border-r-[40px] before:border-r-transparent after:absolute 
+                after:bottom-[-30px] after:w-0 after:border-t-[30px] ${
+                  clickedIndices.includes(i)
+                    ? "after:border-t-[#ffbf00]"
+                    : "after:border-t-[#27aae1]"
+                }  after:border-l-[42px] 
+                after:border-l-transparent after:border-r-[42px] after:border-r-transparent`}
                   style={{
+                    borderColor: "#ffbf00",
                     backgroundColor: clickedIndices.includes(i)
-                      ? "red"
-                      : "white",
+                      ? "#ffbf00"
+                      : "#27aae1",
                   }}
                   onClick={() => handleCreateWord(letter, i)}
                   disabled={clickedIndices.includes(i)}
                 >
-                  {letter}
+                  <span
+                    className="flex justify-center items-center uppercase font-[700] 
+                  text-2xl text-black w-full h-full  rounded-sm cursor-pointer"
+                  >
+                    {letter}
+                  </span>
                 </button>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="flex flex-col font-[500] text-xl uppercase gap-2">
+              {wordList.map((word, i) => (
+                <p>{i + 1 + " - " + word}</p>
+              ))}
+            </div>
           </div>
-          <div>
+
+          <div className="flex justify-center">
             <button
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium 
+              rounded-lg text-sm px-3 py-1.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               onClick={() => shuffleWord()}
             >
               Next Word
             </button>
           </div>
-        </>
+        </div>
       ) : (
         <GameOver />
       )}
