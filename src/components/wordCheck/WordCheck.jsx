@@ -18,6 +18,7 @@ const WordCheck = ({
 
   const toggleLanguage = () => {
     setLang((prevLang) => (prevLang === "en" ? "tr" : "en"));
+    console.log(lang)
     setWordList([])
     setTotalScore(0)
   };
@@ -28,7 +29,7 @@ const WordCheck = ({
       if (!wordList.includes(createdWord)) {
         const { data } = await axios.get("/api/wordCheck", {
           headers: {
-            word: createdWord,
+            word: encodeURI(createdWord),
             lang: lang,
           },
         });
@@ -64,10 +65,6 @@ const WordCheck = ({
     return () => clearInterval(countdown);
   }, [setTimer]);
 
-  // useEffect(() => {
-  //   console.log("search ", createdWord);
-  // }, [createdWord]);
-
   return (
     <div className="relative flex flex-col justify-center items-center gap-12">
       <h1
@@ -91,7 +88,7 @@ const WordCheck = ({
           className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
           onClick={toggleLanguage}
         >
-          {lang === "en" ? "EN" : "TR"}
+          {lang === "en" ? "TR" : "EN"}
         </button>
       </div>
 

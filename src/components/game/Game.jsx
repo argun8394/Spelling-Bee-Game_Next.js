@@ -1,18 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import style from "./game.module.css";
-import { positions } from "@/data/data";
+// import { positions } from "@/data/data";
 import axios from "axios";
 import WordCheck from "../wordCheck/WordCheck";
 import GameOver from "../gameOver/GameOver";
 import Loading from "../loading/Loading";
-import Point from "../point/Point";
+import Score from "@/components/score/Score"
 
 const Game = () => {
   const [shuffWord, setShuffWord] = useState("");
   const [createdWord, setCreatedWord] = useState("");
   const [clickedIndices, setClickedIndices] = useState([]);
-  const [timer, setTimer] = useState(90);
+  const [timer, setTimer] = useState(60);
   const [error, setError] = useState("");
   const [wordList, setWordList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,7 +44,6 @@ const Game = () => {
 
     const letters = word.split("");
     const shuffledLetters = [];
-    // console.log(word);
     setError('')
 
     while (letters.length > 0) {
@@ -82,19 +81,19 @@ const Game = () => {
     shuffleWord();
   }, [lang]);
 
-  // const positions = [
-  //   { x: "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" },
-  //   { x: "top-0 right-1/4 mt-[30px]" },
-  //   { x: "top-1/3 right-10 mt-[22px]" },
-  //   { x: "bottom-[30px] right-1/4" },
-  //   { x: "bottom-[30px] left-1/4" },
-  //   { x: "top-1/3 left-10 mt-[22px]" },
-  //   { x: "top-0 left-1/4 mt-[30px]" },
-  // ];
+  const positions = [
+    { x: "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" },
+    { x: "top-0 right-1/4 mt-[30px]" },
+    { x: "top-1/3 right-10 mt-[22px]" },
+    { x: "bottom-[30px] right-1/4" },
+    { x: "bottom-[30px] left-1/4" },
+    { x: "top-1/3 left-10 mt-[22px]" },
+    { x: "top-0 left-1/4 mt-[30px]" },
+  ];
 
   return (
     <div className={style.container}>
-      {10 > 0 ? (
+      {timer > 0 ? (
         <div>
           {loading && <Loading />}
           {!loading && (
@@ -116,7 +115,7 @@ const Game = () => {
                 />
               </div>
               <div className="flex gap-10">
-                <Point wordList={wordList} totalScore={totalScore} setTotalScore={setTotalScore} />
+                <Score wordList={wordList} totalScore={totalScore} setTotalScore={setTotalScore} />
 
                 <div className=" relative w-[340px] h-[250px] ">
                   {shuffWord.split("").map((letter, i) => (

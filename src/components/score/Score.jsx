@@ -19,9 +19,9 @@ const Point = ({ wordList, totalScore, setTotalScore }) => {
     }, [wordList]);
 
     return (
-        <div className="flex flex-col justify-start items-center">
+        <div className="flex flex-col justify-start items-center gap-4">
             <h1 className='font-[700] text-[24px]'>Score</h1>
-            <p className='font-[600] text-[20px]'>{totalScore}</p>
+            <p className='font-[600] text-[24px]'>{totalScore}</p>
         </div>
     )
 }

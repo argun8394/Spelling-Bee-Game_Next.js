@@ -4,60 +4,53 @@ import { wordList } from "@/data/data";
 export const getData = async (lang) => {
     try {
         if (lang == "en") {
+            let url = "https://random-word-api.herokuapp.com/word?length=7";
 
-            let url = "https://random-word-api.herokuapp.com/word?length=7"
-
-            const response = await axios.get(url)
-            console.log(response)
+            const response = await axios.get(url);
+            console.log(response);
 
             if (response) {
                 return response.data;
             } else {
                 throw new Error("Failed to fetch data");
             }
-
         } else {
-            let data = []
+            let data = [];
             const randomWordIndex = Math.floor(Math.random() * wordList.length);
             const word = wordList[randomWordIndex];
 
-
             if (word) {
-                console.log(word)
+                console.log(word);
                 data.push(word);
                 return [...data];
             } else {
                 throw new Error("Failed to fetch data");
             }
         }
-
-
-
     } catch (err) {
-        throw new Error(err)
+        throw new Error(err);
     }
-}
-
+};
 
 export const wordCheck = async (word, lang) => {
+    console.log('aaaa', lang)
     try {
-        console.log(lang)
-        let url = lang == 'en' ? `https://api.dictionaryapi.dev/api/v2/entries/en/${word}` : `https://sozluk.gov.tr/gts?ara=${word}`
+        console.log('bbbb', lang)
+        let url =
+            lang == "en"
+                ? `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+                : `https://sozluk.gov.tr/gts?ara=${word}`;
 
-        const response = await axios.get(url)
+        const response = await axios.get(url);
         // let data = await response.data[0];
-        console.log(lang, response.status)
+        console.log(lang, response.status);
         if (response.status == 200) {
-
-            // return response.data;
+            return response
         } else {
             throw new Error("Failed to fetch data");
         }
-
-
     } catch (err) {
-        console.log('Error message :' + err)
-        throw new Error(err)
-
+        console.log("Error message :" + err);
+        throw new Error(err);
     }
-}
+};
