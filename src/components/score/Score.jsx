@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Point = ({ wordList, totalScore, setTotalScore }) => {
+const Score = ({ wordList, totalScore, setTotalScore }) => {
 
     const letterPoints = {
         A: 1, B: 2.5, C: 3, Ç: 3, D: 2, E: 1, F: 4.5, G: 3, H: 4, I: 1,
@@ -26,4 +26,4 @@ const Point = ({ wordList, totalScore, setTotalScore }) => {
     )
 }
 
-export default Point
+export default Score
