@@ -1,10 +1,16 @@
 export const wordList = [
-    "chicken", "mention", "charity", "upgrade", "program", "explode", "popular",
-    "freedom", "holiday", "improve", "command", "history", "library", "purpose",
-    "address", "support", "freeway", "inspire", "combine", "finance", "journey",
-    "picture", "justice", "protect", "regular", "require", "science", "special",
-    "control", "produce", "display", "account", "capital", "college", "develop",
-    "service", "install", "receive", "college", "problem"
+    "arkadaş",
+    "artıkçı",
+    "asılmak",
+    "azaltma",
+    "bağlama",
+    "bakkala",
+    "balkona",
+    "bakımlı",
+    "bankaya",
+    "başlama",
+    "bekleme",
+    "beraber",
 ];
 
 export const positions = [

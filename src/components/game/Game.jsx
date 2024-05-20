@@ -6,20 +6,29 @@ import axios from "axios";
 import WordCheck from "../wordCheck/WordCheck";
 import GameOver from "../gameOver/GameOver";
 import Loading from "../loading/Loading";
+import Point from "../point/Point";
 
 const Game = () => {
-  const [newWord, setNewWord] = useState("");
+  const [shuffWord, setShuffWord] = useState("");
   const [createdWord, setCreatedWord] = useState("");
   const [clickedIndices, setClickedIndices] = useState([]);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(90);
   const [error, setError] = useState("");
   const [wordList, setWordList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [lang, setLang] = useState("en");
+  const [totalScore, setTotalScore] = useState(0);
+
+
 
   const getRandomWord = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get("/api/game");
+      const { data } = await axios.get("/api/game", {
+        headers: {
+          lang: lang,
+        },
+      });
       return data[0];
     } catch (error) {
       throw new Error("Error fetching random word:", error);
@@ -29,14 +38,14 @@ const Game = () => {
   };
 
   const shuffleWord = async () => {
-    // const randomWordIndex = Math.floor(Math.random() * wordList.length);
-    // const word = wordList[randomWordIndex];
+
     const word = await getRandomWord();
     if (!word) return;
 
     const letters = word.split("");
     const shuffledLetters = [];
-    console.log(word);
+    // console.log(word);
+    setError('')
 
     while (letters.length > 0) {
       const randomIndex = Math.floor(Math.random() * letters.length);
@@ -47,25 +56,41 @@ const Game = () => {
     const shuffledWord = shuffledLetters.join("");
     setClickedIndices([]);
     setCreatedWord("");
-
-    setNewWord(shuffledWord);
+    setShuffWord(shuffledWord);
   };
 
   const handleCreateWord = (letter, index) => {
-    setCreatedWord((prev) => prev + letter);
-    setClickedIndices((prev) => [...prev, index]);
-    console.log(createdWord);
-  };
+    if (error) setError("");
+    if (!clickedIndices.includes(index)) {
+      setCreatedWord((prev) => prev + letter);
+      setClickedIndices((prev) => [...prev, index]);
+    } else {
+      setClickedIndices((prev) => prev.filter((i) => i !== index));
 
-  const Delete = () => {
-    setClickedIndices([]);
-    setCreatedWord("");
-    setError("");
+      setCreatedWord((prev) => {
+        const wordArray = prev.split("");
+        const letterIndex = clickedIndices.indexOf(index);
+        if (letterIndex !== -1) {
+          wordArray.splice(letterIndex, 1);
+        }
+        return wordArray.join("");
+      });
+    }
   };
 
   useEffect(() => {
     shuffleWord();
-  }, []);
+  }, [lang]);
+
+  // const positions = [
+  //   { x: "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" },
+  //   { x: "top-0 right-1/4 mt-[30px]" },
+  //   { x: "top-1/3 right-10 mt-[22px]" },
+  //   { x: "bottom-[30px] right-1/4" },
+  //   { x: "bottom-[30px] left-1/4" },
+  //   { x: "top-1/3 left-10 mt-[22px]" },
+  //   { x: "top-0 left-1/4 mt-[30px]" },
+  // ];
 
   return (
     <div className={style.container}>
@@ -76,7 +101,6 @@ const Game = () => {
             <div className="flex flex-col gap-10">
               <div className="flex justify-center items-end ">
                 <WordCheck
-                  newWord={newWord}
                   createdWord={createdWord}
                   setCreatedWord={setCreatedWord}
                   setClickedIndices={setClickedIndices}
@@ -86,46 +110,43 @@ const Game = () => {
                   setError={setError}
                   wordList={wordList}
                   setWordList={setWordList}
+                  lang={lang}
+                  setLang={setLang}
+                  setTotalScore={setTotalScore}
                 />
-                <button
-                  className="h-8 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 
-             font-medium rounded-lg text-sm px-3 py-1.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 
-             focus:outline-none dark:focus:ring-red-800"
-                  onClick={() => Delete()}
-                >
-                  Delete
-                </button>
               </div>
-              <div className="flex">
+              <div className="flex gap-10">
+                <Point wordList={wordList} totalScore={totalScore} setTotalScore={setTotalScore} />
+
                 <div className=" relative w-[340px] h-[250px] ">
-                  {newWord.split("").map((letter, i) => (
+                  {shuffWord.split("").map((letter, i) => (
                     <button
                       key={i}
-                      className={`absolute ${positions[i].x} w-[84px] h-[40px]
-                 bg-transparent flex justify-center 
-               items-center before:absolute before:top-[-30px] before:w-0 before:h-0 
-                 before:border-b-[30px] ${clickedIndices.includes(i)
+                      className={`absolute ${positions[i]?.x} w-[84px] h-[40px]
+                      bg-transparent flex justify-center 
+                      items-center before:absolute before:top-[-30px] before:w-0 before:h-0 
+                      before:border-b-[30px] ${clickedIndices?.includes(i)
                           ? "before:border-b-[#ffbf00]"
                           : "before:border-b-[#27aae1]"
                         } before:border-l-[42px] 
-               before:border-l-transparent before:border-r-[40px] before:border-r-transparent after:absolute 
-               after:bottom-[-30px] after:w-0 after:border-t-[30px] ${clickedIndices.includes(i)
+                      before:border-l-transparent before:border-r-[40px] before:border-r-transparent after:absolute 
+                      after:bottom-[-30px] after:w-0 after:border-t-[30px] ${clickedIndices?.includes(i)
                           ? "after:border-t-[#ffbf00]"
                           : "after:border-t-[#27aae1]"
                         }  after:border-l-[42px] 
-               after:border-l-transparent after:border-r-[42px] after:border-r-transparent`}
+                      after:border-l-transparent after:border-r-[42px] after:border-r-transparent`}
                       style={{
                         borderColor: "#ffbf00",
-                        backgroundColor: clickedIndices.includes(i)
+                        backgroundColor: clickedIndices?.includes(i)
                           ? "#ffbf00"
                           : "#27aae1",
                       }}
                       onClick={() => handleCreateWord(letter, i)}
-                      disabled={clickedIndices.includes(i)}
+                    // disabled={clickedIndices.includes(i)}
                     >
                       <span
                         className="flex justify-center items-center uppercase font-[700] 
-                 text-2xl text-black w-full h-full  rounded-sm cursor-pointer"
+                                  text-2xl text-black w-full h-full  rounded-sm cursor-pointer"
                       >
                         {letter}
                       </span>
@@ -134,7 +155,7 @@ const Game = () => {
                 </div>
                 <div className="flex flex-col font-[500] text-xl uppercase gap-2">
                   {wordList.map((word, i) => (
-                    <p>{i + 1 + " - " + word}</p>
+                    <p key={i}>{i + 1 + " - " + word}</p>
                   ))}
                 </div>
               </div>
@@ -142,7 +163,7 @@ const Game = () => {
               <div className="flex justify-center">
                 <button
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium 
-             rounded-lg text-sm px-3 py-1.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                              rounded-lg text-sm px-3 py-1.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                   onClick={() => shuffleWord()}
                 >
                   Next Word

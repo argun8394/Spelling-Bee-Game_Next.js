@@ -11,30 +11,40 @@ const WordCheck = ({
   setError,
   wordList,
   setWordList,
+  lang,
+  setLang,
+  setTotalScore
 }) => {
+
+  const toggleLanguage = () => {
+    setLang((prevLang) => (prevLang === "en" ? "tr" : "en"));
+    setWordList([])
+    setTotalScore(0)
+  };
+
   const handleWordCheck = async () => {
     try {
+      if (!createdWord) return;
       if (!wordList.includes(createdWord)) {
-        setWordList((prev) => [...prev, createdWord]);
         const { data } = await axios.get("/api/wordCheck", {
           headers: {
             word: createdWord,
+            lang: lang,
           },
         });
-        console.log(data[0].word);
         setTimer((prev) => prev + 15);
         setCreatedWord("");
         setClickedIndices([]);
+        setWordList((prev) => [...prev, createdWord]);
         setError("");
         console.log(wordList);
 
-        //   return data;
+        return data;
       } else {
         setError("You have used this word before!");
       }
     } catch (error) {
-      // console.error("Error fetching check word:", error);
-      // setError("Error checking word: " + error.message);
+      console.error("Error fetching check word:", error);
       setError("invalid word");
     }
   };
@@ -61,9 +71,8 @@ const WordCheck = ({
   return (
     <div className="relative flex flex-col justify-center items-center gap-12">
       <h1
-        className={`${
-          timer < 15 ? "text-red-700" : ""
-        } font-[700]   text-[40px]`}
+        className={`${timer < 15 ? "text-red-700" : ""
+          } font-[700]   text-[40px]`}
       >
         {timer}
       </h1>
@@ -78,9 +87,15 @@ const WordCheck = ({
         >
           Word Check
         </button>
+        <button
+          className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
+          onClick={toggleLanguage}
+        >
+          {lang === "en" ? "EN" : "TR"}
+        </button>
       </div>
 
-      {error && <p className="absolute text-red-500">{error}</p>}
+      {error && <p className="absolute text-red-500 font-[600] text-2xl capitalize ">{error}</p>}
     </div>
   );
 };
