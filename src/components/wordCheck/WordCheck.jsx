@@ -55,7 +55,6 @@ const WordCheck = ({
       setTimer((prev) => {
         if (prev <= 1) {
           clearInterval(countdown);
-          // setIsButtonDisabled(true);
           return 0;
         }
         return prev - 1;

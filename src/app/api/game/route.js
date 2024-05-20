@@ -8,7 +8,6 @@ export const GET = async (req, res) => {
 
         const data = await getData(lang)
 
-        console.log(data)
         return NextResponse.json(data, { status: 200 });
     } catch (err) {
         console.error('Error failed word:', err);

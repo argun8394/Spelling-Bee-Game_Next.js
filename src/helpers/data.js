@@ -7,7 +7,6 @@ export const getData = async (lang) => {
             let url = "https://random-word-api.herokuapp.com/word?length=7";
 
             const response = await axios.get(url);
-            console.log(response);
 
             if (response) {
                 return response.data;
@@ -20,7 +19,6 @@ export const getData = async (lang) => {
             const word = wordList[randomWordIndex];
 
             if (word) {
-                console.log(word);
                 data.push(word);
                 return [...data];
             } else {
@@ -42,8 +40,6 @@ export const wordCheck = async (word, lang) => {
                 : `https://sozluk.gov.tr/gts?ara=${word}`;
 
         const response = await axios.get(url);
-        // let data = await response.data[0];
-        console.log(lang, response.status);
         if (response.status == 200) {
             return response
         } else {

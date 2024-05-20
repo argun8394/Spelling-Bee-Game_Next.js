@@ -13,7 +13,6 @@ const Score = ({ wordList, totalScore, setTotalScore }) => {
     };
 
     useEffect(() => {
-        console.log(wordList)
         const total = wordList.reduce((acc, word) => acc + calculateScore(word), 0);
         setTotalScore(total);
     }, [wordList]);

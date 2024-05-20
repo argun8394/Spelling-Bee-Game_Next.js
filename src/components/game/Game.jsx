@@ -141,7 +141,6 @@ const Game = () => {
                           : "#27aae1",
                       }}
                       onClick={() => handleCreateWord(letter, i)}
-                    // disabled={clickedIndices.includes(i)}
                     >
                       <span
                         className="flex justify-center items-center uppercase font-[700] 
