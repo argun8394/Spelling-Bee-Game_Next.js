@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { wordCheck } from "@/helpers/data";
 
+export const dynamic = 'force-dynamic';
+
 export const GET = async (req, res) => {
 
     try {

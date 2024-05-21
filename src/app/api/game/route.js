@@ -3,7 +3,6 @@ import { getData } from "@/helpers/data";
 
 export const dynamic = 'force-dynamic';
 
-
 export const GET = async (req, res) => {
 
     try {
