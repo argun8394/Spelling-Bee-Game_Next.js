@@ -31,9 +31,7 @@ export const getData = async (lang) => {
 };
 
 export const wordCheck = async (word, lang) => {
-    console.log('aaaa', lang)
     try {
-        console.log('bbbb', lang)
         let url =
             lang == "en"
                 ? `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`

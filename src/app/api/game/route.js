@@ -14,3 +14,9 @@ export const GET = async (req, res) => {
         return NextResponse.json({ error: 'Failed to fetch data!' }, { status: 404 });
     }
 }
+
+export const config = {
+    api: {
+        externalResolver: true,
+    },
+};
