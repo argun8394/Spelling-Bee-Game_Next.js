@@ -1,5 +1,8 @@
 # Spelling Bee 
-  
+
+* Word game in English and Turkish languages
+* Deploy link of the project (https://spelling-bee-beta.vercel.app/)
+
 * Next.js_14
 * Axios
 * Tailwind
