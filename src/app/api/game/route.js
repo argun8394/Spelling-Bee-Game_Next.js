@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getData } from "@/helpers/data";
 
+export const dynamic = 'force-dynamic';
+
+
 export const GET = async (req, res) => {
 
     try {
@@ -15,8 +18,3 @@ export const GET = async (req, res) => {
     }
 }
 
-export const config = {
-    api: {
-        externalResolver: true,
-    },
-};
