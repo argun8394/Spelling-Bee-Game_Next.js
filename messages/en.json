@@ -1,0 +1,14 @@
+{
+    "NotFoundPage": {
+        "title": "Page Not Found",
+        "description": "Sorry, the page you are lookingfor does not exist!",
+        "returnHome": "Return HomePage"
+    },
+    "GameOver": {
+        "title": "Game Over",
+        "restartGame": " restart the game"
+    },
+    "Footer": {
+        "copyright": "© 2024 Your App. All rights reserved."
+    }
+}
