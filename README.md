@@ -4,6 +4,7 @@
 * Deploy link of the project (https://spelling-bee-beta.vercel.app/)
 
 * Next.js_14
+* Internationalization(next-intl)
 * Axios
 * Tailwind
 
