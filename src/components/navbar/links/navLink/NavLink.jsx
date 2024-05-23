@@ -3,18 +3,22 @@
 import Link from "next/link";
 import React from "react";
 import styles from "./navLink.module.css";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const NavLink = ({ item }) => {
+
+  const { locale } = useParams()
+  const t = useTranslations('NavLinks')
   const pathName = usePathname();
+
   return (
     <Link
       href={item.path}
-      className={`${styles.container} ${
-        pathName === item.path && styles.active
-      }`}
+      className={`${styles.container} ${pathName === (item.path + locale) && styles.active
+        }`}
     >
-      {item.title}
+      {t(item.title)}
     </Link>
   );
 };

@@ -7,10 +7,7 @@ import NavLink from "./navLink/NavLink";
 import Image from "next/image";
 
 const links = [
-  { title: "HomePage", path: "/" },
-  // { title: "About", path: "/about" },
-  // { title: "Contact", path: "/contact" },
-  // { title: "Blog", path: "/blog" },
+  { title: "homePage", path: "/" },
 ];
 
 const Links = () => {

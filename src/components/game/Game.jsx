@@ -7,6 +7,7 @@ import WordCheck from "../wordCheck/WordCheck";
 import GameOver from "../gameOver/GameOver";
 import Loading from "../loading/Loading";
 import Score from "@/components/score/Score"
+import { useTranslations } from "next-intl";
 
 const Game = () => {
   const [shuffWord, setShuffWord] = useState("");
@@ -20,6 +21,7 @@ const Game = () => {
   const [totalScore, setTotalScore] = useState(0);
 
 
+  const t = useTranslations('GamePage')
 
   const getRandomWord = async () => {
     setLoading(true);
@@ -164,7 +166,7 @@ const Game = () => {
                               rounded-lg text-sm px-3 py-1.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                   onClick={() => shuffleWord()}
                 >
-                  Next Word
+                  {t('nextWord')}
                 </button>
               </div>
             </div>

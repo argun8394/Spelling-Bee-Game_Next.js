@@ -1,8 +1,15 @@
 {
-    "NotFoundPage": {
-        "title": "Page Not Found",
-        "description": "Sorry, the page you are lookingfor does not exist!",
-        "returnHome": "Return HomePage"
+    "NavLinks": {
+        "homePage": "Home Page"
+    },
+    "GamePage": {
+        "nextWord": "Next Word"
+    },
+    "WordCheck": {
+        "wordCheck": "Word Check"
+    },
+    "Score": {
+        "title": "Score"
     },
     "GameOver": {
         "title": "Game Over",
@@ -10,5 +17,10 @@
     },
     "Footer": {
         "copyright": "© 2024 Your App. All rights reserved."
+    },
+    "NotFoundPage": {
+        "title": "Page Not Found",
+        "description": "Sorry, the page you are lookingfor does not exist!",
+        "returnHome": "Return HomePage"
     }
 }

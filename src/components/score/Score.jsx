@@ -1,6 +1,9 @@
+import { useTranslations } from 'next-intl';
 import React, { useState, useEffect } from 'react';
 
 const Score = ({ wordList, totalScore, setTotalScore }) => {
+
+    const t = useTranslations('Score')
 
     const letterPoints = {
         A: 1, B: 2.5, C: 3, Ç: 3, D: 2, E: 1, F: 4.5, G: 3, H: 4, I: 1,
@@ -19,7 +22,7 @@ const Score = ({ wordList, totalScore, setTotalScore }) => {
 
     return (
         <div className="flex flex-col justify-start items-center gap-4">
-            <h1 className='font-[700] text-[24px]'>Score</h1>
+            <h1 className='font-[700] text-[24px]'>{t('title')}</h1>
             <p className='font-[600] text-[24px]'>{totalScore}</p>
         </div>
     )
