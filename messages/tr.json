@@ -6,7 +6,9 @@
         "nextWord": "Sonraki Kelime"
     },
     "WordCheck": {
-        "wordCheck": "Kelime Kontrolü"
+        "wordCheck": "Kelime Kontrolü",
+        "errorUsed": "Bu kelimeyi daha önce kullandınız!",
+        "errorInvalid": "geçersiz kelime!"
     },
     "Score": {
         "title": "Puan"

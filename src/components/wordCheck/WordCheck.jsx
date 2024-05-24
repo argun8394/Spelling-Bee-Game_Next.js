@@ -49,7 +49,7 @@ const WordCheck = ({
       }
     } catch (error) {
       console.error("Error fetching check word:", error);
-      setError("invalid word");
+      setError(t('errorInvalid'));
     }
   };
 
