@@ -12,19 +12,19 @@ const WordCheck = ({
   setError,
   wordList,
   setWordList,
-  lang,
-  setLang,
+  // lang,
+  // setLang,
   setTotalScore
 }) => {
 
   const t = useTranslations('WordCheck')
 
-  const toggleLanguage = () => {
-    setLang((prevLang) => (prevLang === "en" ? "tr" : "en"));
-    console.log(lang)
-    setWordList([])
-    setTotalScore(0)
-  };
+  // const toggleLanguage = () => {
+  //   setLang((prevLang) => (prevLang === "en" ? "tr" : "en"));
+  //   console.log(lang)
+  //   setWordList([])
+  //   setTotalScore(0)
+  // };
 
   const handleWordCheck = async () => {
     try {
@@ -86,12 +86,12 @@ const WordCheck = ({
         >
           {t('wordCheck')}
         </button>
-        <button
+        {/* <button
           className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
           onClick={toggleLanguage}
         >
           {lang === "en" ? "TR" : "EN"}
-        </button>
+        </button> */}
       </div>
 
       {error && <p className="absolute text-red-500 font-[600] text-2xl capitalize ">{error}</p>}

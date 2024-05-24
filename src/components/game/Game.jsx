@@ -17,7 +17,7 @@ const Game = () => {
   const [error, setError] = useState("");
   const [wordList, setWordList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [lang, setLang] = useState("en");
+  // const [lang, setLang] = useState("en");
   const [totalScore, setTotalScore] = useState(0);
 
   const locale = useLocale();
@@ -28,7 +28,7 @@ const Game = () => {
     try {
       const { data } = await axios.get("/api/game", {
         headers: {
-          lang: lang,
+          lang: locale,
         },
       });
       return data[0];
@@ -42,6 +42,7 @@ const Game = () => {
   const shuffleWord = async () => {
 
     const word = await getRandomWord();
+    console.log(word)
     if (!word) return;
 
     const letters = word.split("");
@@ -80,8 +81,11 @@ const Game = () => {
   };
 
   useEffect(() => {
+    setWordList([])
+    setTotalScore(0)
+
     shuffleWord();
-  }, [lang]);
+  }, [locale]);
 
   const positions = [
     { x: "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" },
@@ -111,8 +115,8 @@ const Game = () => {
                   setError={setError}
                   wordList={wordList}
                   setWordList={setWordList}
-                  lang={lang}
-                  setLang={setLang}
+                  // lang={lang}
+                  // setLang={setLang}
                   setTotalScore={setTotalScore}
                 />
               </div>
