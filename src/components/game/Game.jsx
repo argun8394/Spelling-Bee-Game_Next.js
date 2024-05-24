@@ -7,7 +7,7 @@ import WordCheck from "../wordCheck/WordCheck";
 import GameOver from "../gameOver/GameOver";
 import Loading from "../loading/Loading";
 import Score from "@/components/score/Score"
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const Game = () => {
   const [shuffWord, setShuffWord] = useState("");
@@ -20,7 +20,7 @@ const Game = () => {
   const [lang, setLang] = useState("en");
   const [totalScore, setTotalScore] = useState(0);
 
-
+  const locale = useLocale();
   const t = useTranslations('GamePage')
 
   const getRandomWord = async () => {
