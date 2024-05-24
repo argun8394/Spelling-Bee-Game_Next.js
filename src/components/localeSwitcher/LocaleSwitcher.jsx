@@ -7,16 +7,16 @@ import { useState, useEffect } from 'react';
 const LocaleSwitcher = () => {
     const locale = useLocale();
     const router = useRouter();
-    const [lang, setLanguage] = useState(locale);
+    const [lang, setLang] = useState(locale);
     const pathname = usePathname();
 
     useEffect(() => {
-        setLanguage(locale);
+        setLang(locale);
     }, [locale]);
 
     const handleLocaleChange = (newLocale) => {
-        setLanguage(newLocale);
-        document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+        setLang(newLocale);
+        // document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
         const newUrl = `/${newLocale}${pathname.replace(`/${locale}`, '')}`;
         router.push(newUrl);
     }
