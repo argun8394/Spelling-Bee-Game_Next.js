@@ -42,7 +42,6 @@ const WordCheck = ({
         setClickedIndices([]);
         setWordList((prev) => [...prev, createdWord]);
         setError("");
-        console.log(wordList);
 
         return data;
       } else {

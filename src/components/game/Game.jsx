@@ -42,7 +42,6 @@ const Game = () => {
   const shuffleWord = async () => {
 
     const word = await getRandomWord();
-    console.log(word)
     if (!word) return;
 
     const letters = word.split("");

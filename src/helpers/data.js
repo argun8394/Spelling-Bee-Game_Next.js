@@ -38,7 +38,7 @@ export const wordCheck = async (word, lang) => {
                 : `https://sozluk.gov.tr/gts?ara=${word}`;
 
         const response = await axios.get(url);
-        if (response.status == 200) {
+        if (response.status == 200 && !response.data.error) {
             return response
         } else {
             throw new Error("Failed to fetch data");
