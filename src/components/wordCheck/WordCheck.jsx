@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const WordCheck = ({
   createdWord,
@@ -17,6 +17,7 @@ const WordCheck = ({
   setTotalScore
 }) => {
 
+  const locale = useLocale();
   const t = useTranslations('WordCheck')
 
   // const toggleLanguage = () => {
@@ -33,7 +34,7 @@ const WordCheck = ({
         const { data } = await axios.get("/api/wordCheck", {
           headers: {
             word: encodeURI(createdWord),
-            lang: lang,
+            lang: locale,
           },
         });
         setTimer((prev) => prev + 15);
