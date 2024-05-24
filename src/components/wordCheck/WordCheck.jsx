@@ -45,7 +45,7 @@ const WordCheck = ({
 
         return data;
       } else {
-        setError("You have used this word before!");
+        setError(t('errorUsed'));
       }
     } catch (error) {
       console.error("Error fetching check word:", error);
@@ -94,7 +94,7 @@ const WordCheck = ({
         </button> */}
       </div>
 
-      {error && <p className="absolute text-red-500 font-[600] text-2xl capitalize ">{error}</p>}
+      {error && <p className="absolute text-red-500 font-[600] text-xl capitalize ">{error}</p>}
     </div>
   );
 };
