@@ -12,6 +12,7 @@ import useTimer from "@/hooks/useTimer";
 import useWordCheck from "@/hooks/useWordCheck";
 import useShuffleWord from "@/hooks/useShuffleWord";
 import useCreateWord from "@/hooks/useCreateWord";
+import Button from "../button/Button";
 
 const Game = () => {
   const [totalScore, setTotalScore] = useState(0);
@@ -27,8 +28,7 @@ const Game = () => {
     setClickedIndices,
     wordList,
     setWordList,
-  } = useWordCheck(setTimer, createdWord,
-    setCreatedWord,);
+  } = useWordCheck(setTimer, createdWord, setCreatedWord);
 
   const { shuffWord, shuffleWord, loading } = useShuffleWord(
     setClickedIndices,
@@ -36,11 +36,16 @@ const Game = () => {
     setError
   );
 
-  const { handleCreateWord } = useCreateWord(error, setError, setCreatedWord, clickedIndices, setClickedIndices)
+  const { handleCreateWord } = useCreateWord(
+    error,
+    setError,
+    setCreatedWord,
+    clickedIndices,
+    setClickedIndices
+  );
 
   const locale = useLocale();
   const t = useTranslations("GamePage");
-
 
   useEffect(() => {
     setWordList([]);
@@ -130,13 +135,7 @@ const Game = () => {
               </div>
 
               <div className="flex justify-center">
-                <button
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium 
-                              rounded-lg text-sm px-3 py-1.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                  onClick={() => shuffleWord()}
-                >
-                  {t("nextWord")}
-                </button>
+                <Button handleClick={shuffleWord} title={t("nextWord")} />
               </div>
             </div>
           )}
