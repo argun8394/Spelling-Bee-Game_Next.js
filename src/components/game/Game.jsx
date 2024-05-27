@@ -11,9 +11,11 @@ import { useLocale, useTranslations } from "next-intl";
 import useTimer from "@/hooks/useTimer";
 import useWordCheck from "@/hooks/useWordCheck";
 import useShuffleWord from "@/hooks/useShuffleWord";
+import useCreateWord from "@/hooks/useCreateWord";
 
 const Game = () => {
   const [totalScore, setTotalScore] = useState(0);
+  const [createdWord, setCreatedWord] = useState("");
 
   const { timer, setTimer } = useTimer();
 
@@ -21,13 +23,12 @@ const Game = () => {
     handleWordCheck,
     error,
     setError,
-    createdWord,
-    setCreatedWord,
     clickedIndices,
     setClickedIndices,
     wordList,
     setWordList,
-  } = useWordCheck(setTimer);
+  } = useWordCheck(setTimer, createdWord,
+    setCreatedWord,);
 
   const { shuffWord, shuffleWord, loading } = useShuffleWord(
     setClickedIndices,
@@ -35,27 +36,11 @@ const Game = () => {
     setError
   );
 
+  const { handleCreateWord } = useCreateWord(error, setError, setCreatedWord, clickedIndices, setClickedIndices)
+
   const locale = useLocale();
   const t = useTranslations("GamePage");
 
-  const handleCreateWord = (letter, index) => {
-    if (error) setError("");
-    if (!clickedIndices.includes(index)) {
-      setCreatedWord((prev) => prev + letter);
-      setClickedIndices((prev) => [...prev, index]);
-    } else {
-      setClickedIndices((prev) => prev.filter((i) => i !== index));
-
-      setCreatedWord((prev) => {
-        const wordArray = prev.split("");
-        const letterIndex = clickedIndices.indexOf(index);
-        if (letterIndex !== -1) {
-          wordArray.splice(letterIndex, 1);
-        }
-        return wordArray.join("");
-      });
-    }
-  };
 
   useEffect(() => {
     setWordList([]);

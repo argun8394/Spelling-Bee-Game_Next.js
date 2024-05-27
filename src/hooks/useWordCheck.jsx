@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { useLocale, useTranslations } from 'next-intl';
 
-const useWordCheck = (setTimer) => {
+const useWordCheck = (setTimer, createdWord,
+    setCreatedWord,) => {
     const [error, setError] = useState("");
-    const [createdWord, setCreatedWord] = useState("");
     const [clickedIndices, setClickedIndices] = useState([]);
     const [wordList, setWordList] = useState([]);
 
