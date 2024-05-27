@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+
 import { useLocale, useTranslations } from "next-intl";
 import Button from "../button/Button";
 
