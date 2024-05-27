@@ -8,6 +8,8 @@
 * Axios
 * Tailwind
 
+* ![spellingBee](https://github.com/argun8394/Spelling-Bee-Game_Next.js/assets/81585723/d7015c73-6569-40d7-a16b-5ed67d5dc097)
+
 ## Getting Started
 
 First, run the development server:
