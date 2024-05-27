@@ -6,22 +6,23 @@ import axios from "axios";
 import WordCheck from "../wordCheck/WordCheck";
 import GameOver from "../gameOver/GameOver";
 import Loading from "../loading/Loading";
-import Score from "@/components/score/Score"
+import Score from "@/components/score/Score";
 import { useLocale, useTranslations } from "next-intl";
+import useTimer from "@/hooks/useTimer";
 
 const Game = () => {
   const [shuffWord, setShuffWord] = useState("");
   const [createdWord, setCreatedWord] = useState("");
   const [clickedIndices, setClickedIndices] = useState([]);
-  const [timer, setTimer] = useState(60);
   const [error, setError] = useState("");
   const [wordList, setWordList] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [lang, setLang] = useState("en");
   const [totalScore, setTotalScore] = useState(0);
 
+  const { timer, setTimer } = useTimer();
+
   const locale = useLocale();
-  const t = useTranslations('GamePage')
+  const t = useTranslations("GamePage");
 
   const getRandomWord = async () => {
     setLoading(true);
@@ -40,13 +41,12 @@ const Game = () => {
   };
 
   const shuffleWord = async () => {
-
     const word = await getRandomWord();
     if (!word) return;
 
     const letters = word.split("");
     const shuffledLetters = [];
-    setError('')
+    setError("");
 
     while (letters.length > 0) {
       const randomIndex = Math.floor(Math.random() * letters.length);
@@ -80,8 +80,8 @@ const Game = () => {
   };
 
   useEffect(() => {
-    setWordList([])
-    setTotalScore(0)
+    setWordList([]);
+    setTotalScore(0);
 
     shuffleWord();
   }, [locale]);
@@ -120,7 +120,11 @@ const Game = () => {
                 />
               </div>
               <div className="flex gap-10">
-                <Score wordList={wordList} totalScore={totalScore} setTotalScore={setTotalScore} />
+                <Score
+                  wordList={wordList}
+                  totalScore={totalScore}
+                  setTotalScore={setTotalScore}
+                />
 
                 <div className=" relative w-[340px] h-[250px] ">
                   {shuffWord.split("").map((letter, i) => (
@@ -169,7 +173,7 @@ const Game = () => {
                               rounded-lg text-sm px-3 py-1.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                   onClick={() => shuffleWord()}
                 >
-                  {t('nextWord')}
+                  {t("nextWord")}
                 </button>
               </div>
             </div>
