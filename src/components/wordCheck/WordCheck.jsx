@@ -2,48 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocale, useTranslations } from "next-intl";
 
-const WordCheck = ({
-  createdWord,
-  setCreatedWord,
-  setClickedIndices,
-  timer,
-  setTimer,
-  error,
-  setError,
-  wordList,
-  setWordList,
-  setTotalScore
-}) => {
-
+const WordCheck = ({ createdWord, timer, error, handleWordCheck }) => {
   const locale = useLocale();
-  const t = useTranslations('WordCheck')
-
-  const handleWordCheck = async () => {
-    try {
-      if (!createdWord) return;
-      if (!wordList.includes(createdWord)) {
-        const { data } = await axios.get("/api/wordCheck", {
-          headers: {
-            word: encodeURI(createdWord),
-            lang: locale,
-          },
-        });
-        setTimer((prev) => prev + 15);
-        setCreatedWord("");
-        setClickedIndices([]);
-        setWordList((prev) => [...prev, createdWord]);
-        setError("");
-
-        return data;
-      } else {
-        setError(t('errorUsed'));
-      }
-    } catch (error) {
-      console.error("Error fetching check word:", error);
-      setError(t('errorInvalid'));
-    }
-  };
-
+  const t = useTranslations("WordCheck");
 
   return (
     <div className="relative flex flex-col justify-center items-center gap-12">
@@ -62,12 +23,15 @@ const WordCheck = ({
           onClick={() => handleWordCheck()}
           disabled={timer === 0}
         >
-          {t('wordCheck')}
+          {t("wordCheck")}
         </button>
-
       </div>
 
-      {error && <p className="absolute text-red-500 font-[600] text-xl capitalize ">{error}</p>}
+      {error && (
+        <p className="absolute text-red-500 font-[600] text-xl capitalize ">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

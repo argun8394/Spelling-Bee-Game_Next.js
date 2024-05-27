@@ -9,17 +9,25 @@ import Loading from "../loading/Loading";
 import Score from "@/components/score/Score";
 import { useLocale, useTranslations } from "next-intl";
 import useTimer from "@/hooks/useTimer";
+import useWordCheck from "@/hooks/useWordCheck";
 
 const Game = () => {
   const [shuffWord, setShuffWord] = useState("");
-  const [createdWord, setCreatedWord] = useState("");
-  const [clickedIndices, setClickedIndices] = useState([]);
-  const [error, setError] = useState("");
-  const [wordList, setWordList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalScore, setTotalScore] = useState(0);
 
   const { timer, setTimer } = useTimer();
+  const {
+    handleWordCheck,
+    error,
+    setError,
+    createdWord,
+    setCreatedWord,
+    clickedIndices,
+    setClickedIndices,
+    wordList,
+    setWordList,
+  } = useWordCheck(setTimer);
 
   const locale = useLocale();
   const t = useTranslations("GamePage");
@@ -114,8 +122,7 @@ const Game = () => {
                   setError={setError}
                   wordList={wordList}
                   setWordList={setWordList}
-                  // lang={lang}
-                  // setLang={setLang}
+                  handleWordCheck={handleWordCheck}
                   setTotalScore={setTotalScore}
                 />
               </div>
